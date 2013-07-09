@@ -15,7 +15,7 @@ class PhotosHandler(webapp2.RequestHandler):
         elems = tree.findall("//k:IconStyle/k:scale", namespaces=ns)
         for e in elems:
             if e.text == "0.7":
-                e.text = "4.0"
+                e.text = "1.0"
 
         self.response.headers["Content-Type"] = "application/vnd.google-earth.kml+xml"
         self.response.write(etree.tostring(tree))
