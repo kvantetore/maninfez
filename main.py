@@ -40,6 +40,7 @@ class PhotosHandler(webapp2.RequestHandler):
                 "category": entry["category"],
                 "title": entry["title"]["$t"],
                 "date": entry["updated"]["$t"],
+                "filename": entry["media$group"]["media$title"]["$t"],
                 "thumbnail": entry["media$group"]["media$thumbnail"][0],
                 "photo": entry["media$group"]["media$thumbnail"][-1],
                 "link": [l["href"] for l in entry["link"] if l["rel"] == "http://schemas.google.com/photos/2007#canonical"][0],
@@ -50,6 +51,8 @@ class PhotosHandler(webapp2.RequestHandler):
             }
             photos.append(new_entry)
             #print json.dumps(new_entry, indent=4)
+
+        photos.sort(key=lambda photo: photo["filename"])
 
         self.response.headers["Content-Type"] = "text/json"
         self.response.headers["Access-Control-Allow-Origin"] = "*"
